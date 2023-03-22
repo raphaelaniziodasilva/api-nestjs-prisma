@@ -1,34 +1,33 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
   // va para o arquivo user.module.ts em controllers e faça a importação do UserController
 
+  constructor(private readonly userService: UserService) {}
+
   @Post()
-  async create(@Body() {name, email, password}: CreateUserDTO) {
-    return {name, email, password};
+  async create(@Body() data: CreateUserDTO) {
+    return await this.userService.create(data);
   }
 
   @Get()
-  async list(users) {
-    return {users:[]};
+  async list() {
+    return await this.userService.list();
   }
 
   @Get(':id')
   async show(@Param('id', ParseIntPipe) id: number) {
-    return {user:{}, id}
+    return await this.userService.show(id); 
   }
 
   @Put(':id')
-  async update(@Body() {name, email, password}: UpdatePutUserDTO, @Param('id', ParseIntPipe) id: number) {
-    return {
-        method: 'put',
-        name, email, password,
-        id
-    }    
+  async update(@Body() data: UpdatePutUserDTO, @Param('id', ParseIntPipe) id: number) {
+    return this.userService.update(id, data)
   }
 
   @Delete(':id')

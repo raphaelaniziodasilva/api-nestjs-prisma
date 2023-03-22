@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsNotEmpty, IsEmail, IsStrongPassword } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsStrongPassword, IsOptional, IsDateString } from 'class-validator';
 
 export class CreateUserDTO {
   @IsString()
@@ -18,4 +18,8 @@ export class CreateUserDTO {
     minSymbols: 1,
   })
   password: string;
+
+  @IsOptional()
+  @IsDateString()
+  birthAt: string;
 }
