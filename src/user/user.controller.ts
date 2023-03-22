@@ -27,15 +27,12 @@ export class UserController {
 
   @Put(':id')
   async update(@Body() data: UpdatePutUserDTO, @Param('id', ParseIntPipe) id: number) {
-    return this.userService.update(id, data)
+    return await this.userService.update(id, data)
   }
 
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
-    return {
-        id
-    }
+    return await this.userService.delete(id);
   }
-
 
 }
