@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseInterceptors } from '@nestjs/common';
+import { LoggingInterceptor } from '../interceptors/log.onterceptor';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
 import { UserService } from './user.service';
 
+// @UseInterceptors(LoggingInterceptor)// usando o interceptor de forma local
 @Controller('users')
 export class UserController {
   // va para o arquivo user.module.ts em controllers e faça a importação do UserController

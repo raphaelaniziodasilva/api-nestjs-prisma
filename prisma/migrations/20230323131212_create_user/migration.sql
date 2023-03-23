@@ -4,7 +4,7 @@ CREATE TABLE `users` (
     `name` VARCHAR(75) NOT NULL,
     `email` VARCHAR(70) NOT NULL,
     `password` VARCHAR(45) NOT NULL,
-    `birthAt` DATE NOT NULL,
+    `birthAt` DATE NULL,
     `createdAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 

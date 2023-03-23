@@ -20,6 +20,14 @@ export class UserService {
     }
 
     async show(id: number) {
+        // verificando se o id que foi informado existe 
+        if(!(await this.prisma.user.count({ // vai contar quantos registros tem esse id 
+            where: {
+                id // so vai existir um id se não vai ter 0
+            }
+        }))) {
+            throw new NotFoundException(`O usuário ${id} não existe`);
+        }
         return await this.prisma.user.findUnique({
             where: {id}
         });
