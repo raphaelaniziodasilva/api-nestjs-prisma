@@ -9,7 +9,7 @@ import { UserService } from './user.service';
   imports: [PrismaModule],
   controllers: [UserController],
   providers: [UserService],
-  exports: [],
+  exports: [UserService],// exportando o serviço para poder ter acesso a ele em outros arquivos
 })
 
 // precisamos importar uma interface do nestjs que vai nos obrigar a implementar o metodo que consiga utilizar: aplicar o middleware 
