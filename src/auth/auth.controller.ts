@@ -7,6 +7,7 @@ import { AuthLoginDTO } from './dto/auth-login.dto';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { AuthResetPasswordDTO } from './dto/auth-reset-password.dto';
 import { AuthService } from './auth.service';
+import { VerifyTokenDTO } from './dto/auth-verify-token.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -37,4 +38,12 @@ export class AuthController {
   async resetPassword(@Body() {password, token}: AuthResetPasswordDTO) {
     return this.authService.resetPassword(password, token);
   }
+
+  // verificando o token
+  @Post('verifyToken')
+  async verifyToken(@Body() body: VerifyTokenDTO){
+    return await this.authService.verifyToken(body.token);
+  }
+
+
 }
