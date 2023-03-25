@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/databasePrisma/prisma.module';
 import { UserModule } from 'src/user/user.module';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 
 @Module({
   imports: [
@@ -17,9 +18,13 @@ import { AuthController } from './auth.controller';
     PrismaModule, // acessando o banco de dados
   ],
   controllers: [AuthController],
+  providers: [AuthService]
 })
 export class AuthModule {}
+
+// va para o arquivo app.module.ts em imports e importe o AuthModule
 
 // A nossa configuração: instalação esta pronta ja conseguimos emitir e validar tokens
 
 // para conseguir emitir e validar tokens vamos fazer pelo serviço, crie um arquivo chamado auth.service.ts
+
