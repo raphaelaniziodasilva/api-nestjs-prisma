@@ -20,7 +20,7 @@ export class UserService {
     }
 
     async show(id: number) {
-        // verificando se o id que foi informado existe 
+        // verificando se o id que foi informado existe no banco de dados
         if(!(await this.prisma.user.count({ // vai contar quantos registros tem esse id 
             where: {
                 id // so vai existir um id se não vai ter 0
