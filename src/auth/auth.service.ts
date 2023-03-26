@@ -22,7 +22,7 @@ export class AuthService {
   // vamos precisar do controller de autenticação, crie um arquivo chamado auth.controller.ts
 
   // criando token de autenticação
-  async createToken(user: User) { // importando o User do @prisma/client
+  createToken(user: User) { // importando o User do @prisma/client
     return {
       accessToken: this.jwtService.sign({ // metodo sign serve para assinar o token
           // criando o payload
@@ -42,9 +42,9 @@ export class AuthService {
   }
 
   // verificando o token
-  async verifyToken(token: string) {
+  verifyToken(token: string) {
     try {
-      const data = await this.jwtService.verify(token, {
+      const data = this.jwtService.verify(token, {
         audience: 'users', // audience tem que ser igual ao da criação do token
         issuer: 'login', // issuer tem que ser igual ao da criação do token
       });
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   // vendo se o token e valido
-  async isValidToken(token: string) {
+  isValidToken(token: string) {
     try {
       this.verifyToken(token);
       return true;

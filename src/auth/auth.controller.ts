@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
 // Vamos ter as rotas de um sistema de autenticação, fazer autenticação de um usuario aonde vamos ter o login, cadastro de um novo usuario e recuperação de senha
 
-import { Body, Controller, Post } from '@nestjs/common/decorators';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common/decorators';
 import { AuthPasswordRecoveryDTO } from './dto/auth-password-recovery.dto';
 import { AuthLoginDTO } from './dto/auth-login.dto';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { AuthResetPasswordDTO } from './dto/auth-reset-password.dto';
 import { AuthService } from './auth.service';
 import { VerifyTokenDTO } from './dto/auth-verify-token.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -39,10 +40,13 @@ export class AuthController {
     return this.authService.resetPassword(password, token);
   }
 
-  // verificando o token
-  @Post('verifyToken')
-  async verifyToken(@Body() body: VerifyTokenDTO){
-    return await this.authService.verifyToken(body.token);
+  // autorização do token
+  @UseGuards(AuthGuard) // fazendo o uso do guard authorization
+  @Post('authorization')
+  async authorization(@Req() req){
+    // vamos utilizar os guards que tem um objetivo que e dizer se pode ou não executar o manupulador de rotas, essa rota authorization só pode ser executada se eu tiver um token valido 
+    // criando o guards, dentro da pasta src crie uma nova pasta chamada guards e dentro dela crie um arquivo chamado auth.guard.ts
+    return {authorization: 'ok', data: req.tokenPayLoad};
   }
 
 
