@@ -1,26 +1,31 @@
 /* eslint-disable prettier/prettier */
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
+import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    // vamos precisar do serviço authService para verificar o token
-    constructor(private readonly authService: AuthService) {}
+    // vamos precisar do serviço AuthService para verificar o token e também o UserService para pegar as informações do usuario
+    constructor(
+        private readonly authService: AuthService,
+        private readonly userService: UserService) {}
 
-    canActivate(context: ExecutionContext) {
+    async canActivate(context: ExecutionContext) {
 
         const request = context.switchToHttp().getRequest();
 
         // precisamos ir la no headers extrair o authorization
         const {authorization} = request.headers;
-        console.log(authorization)
         try {
             // dados do payload
             const data = this.authService.verifyToken((authorization ?? '').split(' ')[1]);
 
             // passando os dados do payload para o cara que esta solicitando
             request.tokenPayLoad = data;
+
+            // passando os dados do usuario para o cara que esta solicitando
+            request.user = await this.userService.show(data.id)
 
             // precisamos retornar um boolean, se eu posso ou não continuar a execução
             return true;
