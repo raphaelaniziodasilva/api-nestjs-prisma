@@ -32,11 +32,8 @@ export class AuthGuard implements CanActivate {
         } catch (error) {
             return false;
         }
-        
     }
-
-    
-    
-
-
 }
+// va para pasta auth dentro do arquivo auth.controller.ts no metodo authorization e utilize AuthGuard
+
+// o AuthGuard ele usa AuthService ou seja precisamos fazer a importação do AuthModule dentro de user, va para pasta user dentro do arquivo user.module.ts dentro de imports e importe o AuthModule

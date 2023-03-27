@@ -12,9 +12,16 @@ model User {
   name      String   @db.VarChar(75)
   email     String   @db.VarChar(70)
   password  String   @db.VarChar(45)
-  birthAt  DateTime? @db.Date
+  birthAt   DateTime?@db.Date
+  role      Int      @default(1)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @db.Timestamp(0)
 
   @@map("users")
 }
+
+// com o campo role incluido agora vamos atualizar a nossa tabela no db
+// para atualizar: npx prisma migrate dev --name AddColumnRole
+// precisamos autorizar o client: npx prisma generate
+
+// o dto ganhou mais um campo chamado role, va para a pasta user na pasta dto e inclua o campo role

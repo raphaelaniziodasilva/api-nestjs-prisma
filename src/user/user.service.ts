@@ -33,13 +33,13 @@ export class UserService {
         });
     }
 
-    async update(id: number, {name, email, password, birthAt}: UpdatePutUserDTO) {
+    async update(id: number, {name, email, password, birthAt, role}: UpdatePutUserDTO) {
         if(!(await this.show(id))) {
             throw new NotFoundException(`O usuário ${id} não existe`);
         }
         
         return await this.prisma.user.update({
-            data: {name, email, password, birthAt: birthAt ? new Date(birthAt): null},
+            data: {name, email, password, birthAt: birthAt ? new Date(birthAt): null, role},
             where: {id}
         });
     }

@@ -57,9 +57,8 @@ export class AuthController {
   @UseGuards(AuthGuard) // fazendo o uso do guard authorization
   @Post('authorization')
   async authorization(@User() user){ // fazendo uso do decorator criado @User
-    // dentro do decorator @User(podemos passar os dados que queremos filtrar)
+    // dentro do decorator @User(podemos passar os dados que queremos filtrar ex: "email", "id, "nome) e etc...
     return {user};
-   }
-
+  }
 
 }

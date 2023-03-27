@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsNotEmpty, IsEmail, IsStrongPassword, IsOptional, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsStrongPassword, IsOptional, IsDateString, IsEnum } from 'class-validator';
+import { Role } from 'src/enums/role.enum';
 
 export class CreateUserDTO {
   @IsString()
@@ -22,4 +23,11 @@ export class CreateUserDTO {
   @IsOptional()
   @IsDateString()
   birthAt: string;
+
+  @IsOptional()
+  // vamos passar o enum que espera um objeto esse objeto vai ser o Role, esse enum que queremos validar
+  @IsEnum(Role)
+   // o role so pode ser 1 ou 2
+  role: number;
+  // adicione a role no dto de atualização, e la na pasta user.service.ts em editar passe o role
 }

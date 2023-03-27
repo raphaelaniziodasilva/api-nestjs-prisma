@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
-import { IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString, IsStrongPassword } from "class-validator";
-
+import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, IsStrongPassword } from "class-validator";
+import { Role } from "../../enums/role.enum";
 export class UpdatePutUserDTO {
     @IsString()
     @IsNotEmpty()
@@ -26,5 +26,9 @@ export class UpdatePutUserDTO {
     @IsOptional()
     @IsDateString()
     birthAt: string;
+
+    @IsOptional()
+    @IsEnum(Role)
+    role: number;
 
 }
