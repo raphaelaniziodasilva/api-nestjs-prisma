@@ -6,6 +6,8 @@ import { User } from '@prisma/client';
 import { PrismaService } from 'src/databasePrisma/prisma.service';
 import { UserService } from 'src/user/user.service';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -68,12 +70,16 @@ export class AuthService {
   async login(email: string, password: string) {
     const user = await this.prisma.user.findFirst({
       where: {
-        email,
-        password,
+        email
       },
     });
 
     if (!user) {
+      throw new UnauthorizedException('Email e/ou senha incorretos');
+    }
+
+    // vamos fazer a comparação da senha do login com a senha do usuario
+    if(!await bcrypt.compare(password, user.password)) {
       throw new UnauthorizedException('Email e/ou senha incorretos');
     }
 

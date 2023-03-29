@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/databasePrisma/prisma.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
@@ -10,7 +11,14 @@ export class UserService {
     constructor(private readonly prisma: PrismaService) {}
 
     async create(data: CreateUserDTO) {
-        return await this.prisma.user.create({
+
+        // usando o bcrypt para encriptar a senha por motivos de segurança
+        // instale o bcrypt: npm i bcrypt, npm i @types/bcrypt e depois faça a importação do bcrypt
+
+        const salt = await bcrypt.genSalt();
+        data.password = await bcrypt.hash(data.password, salt)
+
+        return this.prisma.user.create({
             data
         });
     }
@@ -37,6 +45,9 @@ export class UserService {
         if(!(await this.show(id))) {
             throw new NotFoundException(`O usuário ${id} não existe`);
         }
+
+        const salt = await bcrypt.genSalt();
+        password = await bcrypt.hash(password, salt)
         
         return await this.prisma.user.update({
             data: {name, email, password, birthAt: birthAt ? new Date(birthAt): null, role},

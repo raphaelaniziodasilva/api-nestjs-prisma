@@ -11,7 +11,7 @@ model User {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt
   name      String   @db.VarChar(75)
   email     String   @db.VarChar(70)
-  password  String   @db.VarChar(45)
+  password  String   @db.VarChar(200)
   birthAt   DateTime?@db.Date
   role      Int      @default(1)
   createdAt DateTime @default(now()) @db.Timestamp(0)
