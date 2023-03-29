@@ -12,8 +12,7 @@ import { AuthService } from './auth.service';
 @Module({
   imports: [
     JwtModule.register({
-      secret: '0dLa27tyKYNSyl5HFnPnNzH0RfNEJ1iY',
-      // signOptions: { expiresIn: '1d' }
+      secret: process.env.JWT_SECRET_KEY
     }),
     forwardRef(() => UserModule),
     // agora va para o arquivo app.module.ts e utilize forwardRef(() =>) em AuthModule e UserModule
