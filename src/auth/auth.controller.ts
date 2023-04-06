@@ -1,14 +1,18 @@
 /* eslint-disable prettier/prettier */
 // Vamos ter as rotas de um sistema de autenticação, fazer autenticação de um usuario aonde vamos ter o login, cadastro de um novo usuario e recuperação de senha
 
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common/decorators';
-import { AuthPasswordRecoveryDTO } from './dto/auth-password-recovery.dto';
+import { Body, Controller, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common/decorators';
+import { FileInterceptor } from '@nestjs/platform-express'; // ler arquivos
+import { User } from 'src/decorators/user.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthService } from './auth.service';
 import { AuthLoginDTO } from './dto/auth-login.dto';
+import { AuthPasswordRecoveryDTO } from './dto/auth-password-recovery.dto';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { AuthResetPasswordDTO } from './dto/auth-reset-password.dto';
-import { AuthService } from './auth.service';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { User } from 'src/decorators/user.decorator';
+// vamos importar o writeFile para salvar os arquivos no db
+import { writeFile } from 'fs/promises';
+import { join } from 'path';
 
 @Controller('auth')
 export class AuthController {
@@ -59,6 +63,20 @@ export class AuthController {
   async authorization(@User() user){ // fazendo uso do decorator criado @User
     // dentro do decorator @User(podemos passar os dados que queremos filtrar ex: "email", "id, "nome) e etc...
     return {user};
+  }
+
+  // upload de arquivo de fotos usando o post
+  @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard)
+  @Post('photo')
+  async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File){ 
+    // agora vamos salvar a foto: arquivo no sistema
+    // crie uma pasta fora do src chamado storage e dentro dela uma subpasta photo nessa pasta vai ser gerado as photos enviando pelo post
+
+    const result  = await writeFile(join(__dirname, '..', '..', 'storage', 'photo', 'damon slayer.jpg' ), photo.buffer);
+
+
+    return {result};
   }
 
 }
