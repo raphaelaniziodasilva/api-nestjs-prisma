@@ -6,11 +6,11 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { AuthModule } from 'src/auth/auth.module';
-import { PrismaModule } from 'src/databasePrisma/prisma.module';
 import { UserIdCheckMiddleware } from '../middleware/user-id-check.middleware';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { PrismaModule } from '../databasePrisma/prisma.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { UserService } from './user.service';
     // após importar o AuthModule agora precisamos resolver o erro de circular dependency
     // para resolver o erro de circular dependency vamos usar: forwardRef(() => AuthModule)
     // va para a pasta auth no arquivo auth.module.ts e utilize forwardRef((UserModule) => )
+    
   ],
   controllers: [UserController],
   providers: [UserService],

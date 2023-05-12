@@ -3,10 +3,10 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { PrismaService } from 'src/databasePrisma/prisma.service';
-import { UserService } from 'src/user/user.service';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import * as bcrypt from 'bcrypt';
+import { PrismaService } from '../databasePrisma/prisma.service';
+import { UserService } from '../user/user.service';
 
 
 @Injectable()

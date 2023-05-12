@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { IsString, IsNotEmpty, IsEmail, IsStrongPassword, IsOptional, IsDateString, IsEnum } from 'class-validator';
-import { Role } from 'src/enums/role.enum';
+import { Role } from '../../enums/role.enum';
 
 export class CreateUserDTO {
   @IsString()

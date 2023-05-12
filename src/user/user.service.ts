@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from 'src/databasePrisma/prisma.service';
+import { PrismaService } from '../databasePrisma/prisma.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
 
@@ -64,5 +64,4 @@ export class UserService {
             where: {id}
         })
     }
-   
 }

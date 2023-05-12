@@ -18,8 +18,6 @@ import {
   FileInterceptor,
   FilesInterceptor,
 } from '@nestjs/platform-express'; // ler arquivos
-import { User } from 'src/decorators/user.decorator';
-import { AuthGuard } from 'src/guards/auth.guard';
 import { AuthService } from './auth.service';
 import { AuthLoginDTO } from './dto/auth-login.dto';
 import { AuthPasswordRecoveryDTO } from './dto/auth-password-recovery.dto';
@@ -28,6 +26,8 @@ import { AuthResetPasswordDTO } from './dto/auth-reset-password.dto';
 // vamos importar o writeFile para salvar os arquivos no db
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { User } from '../decorators/user.decorator';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
